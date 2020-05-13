@@ -30,10 +30,10 @@ $response2 = $kernel->handle($request2);
 // We've traced the code from the first file that's executed - public/index.php - all the way into this core HttpKernel class. Specifically,
 // this handleRaw() method. These 50 lines of code are the entire framework.
 // It somehow transforms a Request at the beginning into a Response at the end. The question is: how? What does it do to accomplish that?
-//1- The RequestStack
-// 2-Dispatching RequestEvent (kernel.request)
-//3-Hello RouterListener
-//4-What does Routing Return?
+1- The RequestStack
+ 2-Dispatching RequestEvent (kernel.request)
+3-Hello RouterListener
+
 
 //1-The RequestStack: The first line uses something called a RequestStack: 
 $this->requestStack->push($request) ;//The RequestStack is a small object that basically holds an array of Request objects
@@ -65,3 +65,29 @@ function onKernelRequest(RequestEvent $event)
     } catch (ResourceNotFoundException $e) {
     }
 }
+////////////////////////////////////////////////////////Routing Secrets & Request Attributes////////////////////////////////////////////////////////////////////////////////////////////////
+Routing Secrets & Request Attributes
+// inside   config/routes.yaml
+// add route like this 
+index 
+    path:/ahmad
+    controller:App\Controller\PostController::index
+//we can put query parameter 
+  path: /ahmad/{id}
+
+//and we can to put default  if we do not put id =>by default its puted  and we can put what we want like play:true
+index 
+    path: /ahmad/{id}
+   default
+    _controller:App\Controller\PostController::index
+    id=10 
+    play:true
+//we can put query parameter 
+////////////////////////////////////////////////////////////////Request Attributes//////////////////////////////////////////////////////////////////////////////////////////////////////////
+Request:
+//the attributes is/ _route, _controller, slug 
+// the Request object has several public properties and all of them - except one 
+$request->headers ;$request->cookies ;$request->query;
+$request->attributes ; //except attrebute $request->attributes. This property does not correspond to any real part of the HTTP request.
+$request->attributes->add($parameters);// parameters like 
+
