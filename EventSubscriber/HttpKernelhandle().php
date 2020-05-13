@@ -91,3 +91,20 @@ $request->headers ;$request->cookies ;$request->query;
 $request->attributes ; //except attrebute $request->attributes. This property does not correspond to any real part of the HTTP request.
 $request->attributes->add($parameters);// parameters like 
 
+/////////////////////////////////////////////////////////////////////Listeners to kernel.request can Return a Response//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Listeners to kernel.request can Return a Response
+//In src/EventListener/UserAgentSubscriber.php, we can say 
+$event->setResponse(); //Not all event classes have this setResponse() method - but RequestEvent does. Then say new Response() and set a very important message.
+class UserAgentSubscriber implements EventSubscriberInterface
+{
+    public function onKernelRequest(RequestEvent $event)
+    {
+        $event->setResponse(new Response(
+            'Ah, ah, ah: you didn\'t say the magic word'
+        ));
+    }
+}
+
+///////////////////////////////////////////////////////////////////////ControllerResolverInterface//////////////////////////////////////////////////////////////////
+ControllerResolverInterface
+
